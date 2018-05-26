@@ -1,0 +1,6 @@
+---
+
+- hosts: gitbook
+  roles:
+    - nodejs
+    - gitbook

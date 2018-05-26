@@ -1,0 +1,42 @@
+---
+- name: ensure apache is at the latest version
+  become: true
+  yum:
+    name: httpd
+    state: latest
+
+- name: install git
+  become: true
+  yum:
+    name: git
+    state: present
+
+- name: pull books from git
+  become: true
+  git:
+    repo: "{{ book_repo }}"
+    dest: "{{ gitbook_folder }}"
+    force: yes
+    update: yes
+    version: master
+
+- name: init gitbook
+  become: true
+  shell:
+    cmd: gitbook init
+    chdir: "{{ gitbook_folder }}"
+
+- name: build gitbook static files
+  become: true
+  shell:
+    cmd: gitbook build
+    chdir: "{{ gitbook_folder }}"
+
+- name: mv static files to apache default folder
+  become: true
+  shell:
+    cmd: rsync -a _book/* /var/www/html/
+    chdir: "{{ gitbook_folder }}"
+  notify:
+    - restart apache
+  

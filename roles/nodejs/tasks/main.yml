@@ -1,0 +1,24 @@
+---
+
+# Init Ec2 AmazonLinux instance with nodejs. 
+##########
+
+- name: get nodejs install scripts
+  become: true
+  shell: 'curl -sL https://rpm.nodesource.com/setup_8.x | sudo -E bash -'
+  args:
+    warn: false
+
+- name: install nodejs
+  become: true
+  yum:
+    name: nodejs
+    state: latest
+
+- name: check node version
+  become: true
+  shell: 'node -v ; npm -v ' 
+  register: out
+
+- debug: var=out.stdout_lines
+

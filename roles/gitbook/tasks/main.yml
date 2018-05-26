@@ -1,0 +1,26 @@
+---
+
+# GitBook
+##########
+
+- name: install necessary package for gitbook with yam
+  become: true
+  become_method: sudo
+  npm:
+    name: '{{ item }}'
+    global: yes
+    state: present
+  with_items: '{{ gitbook_npm_packages }}'
+
+# - name: fetch the specific gitbook version
+#   command: 'gitbook fetch {{ gitbook_specific_version }}'
+#   register: install_gitbook_specific_version
+#   changed_when: '"has been installed" in install_gitbook_specific_version'
+#   when: 'gitbook_switch_specific_version == "true"'
+
+# - name: install some gitbook plugins
+#   command: 'gitbook install {{ gitbook_plugins }}'
+#   register: install_gitbook_plugins
+#   changed_when: '"nothing to install!" not in install_gitbook_plugins.stdout'
+
+- import_tasks: launch_books.yml

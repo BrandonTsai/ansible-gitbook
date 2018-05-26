@@ -1,0 +1,14 @@
+---
+
+gitbook_npm_packages:
+  - gitbook-cli
+
+gitbook_plugins:
+  - disqus
+  - ga
+  - github
+  - page-toc-button
+
+book_repo: https://github.com/BrandonTsai/study-notes.git
+gitbook_folder: /opt/gitbooks
+
